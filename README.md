@@ -26,5 +26,5 @@ initClass(styles);
   [{ '-object-in-array-item-1': true }]
 );} />
 
-// result class="header__abc _logo -big -true -array-item-teim-1 -dark__lmn -object-in-array-item-1"
+// result class="header__abc _logo__def -big__xyz -true -array-item-1 -dark__lmn -object-in-array-item-1"
 ```
