@@ -9,6 +9,8 @@ const styles = {
 
 initClass(styles);
 
+console.log('addClass:\n', addClass());
+
 const headerClass = addClass(
   '_logo',
   { '-big': true, '-true': true, '-false': false },

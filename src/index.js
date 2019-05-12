@@ -45,7 +45,8 @@ export const initClass = function initClass(initStyles) {
 
 export const addClass = function addClass(...args) {
   const indexClass = styles[Object.keys(styles)[0]];
+  const classes = getClasses(args);
   return {
-    className: `${indexClass} ${getClasses(args)}`
+    className: indexClass + (classes.length ? ` ${classes}` : '')
   };
 };
