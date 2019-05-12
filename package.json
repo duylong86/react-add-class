@@ -30,7 +30,8 @@
   ],
   "keywords": [
     "react",
-    "react-add-class"
+    "react-add-class",
+    "className"
   ],
   "author": "Duy Long <dluy.llong@gmail.com>",
   "license": "ISC",

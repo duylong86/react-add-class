@@ -4,27 +4,45 @@
 
 ## How to use
 
+```html
+<!-- expected result -->
+<div class="header__ab _block_xy -fixed__zh">
+  <div class="header__ab _logo__yd -dark__ka"></div>
+  <div class="header__ab _title__xn -global-text -big__xa"></div>
+  <div class="header__ab _menu__ph -expanded__xh"></div>
+</div>
+```
+
 ```es6
 import { initClass, addClass } from 'react-add-class';
 import styles from './styles.css';
 
 /*
   styles = {
-    header: 'header__abc',
-    _logo: '_logo__def',
-    ['-big']: '-big__xyz',
-    ['-dark']: '-dark__lmn'
+    header: 'header__ab',
+    _block: '_block_xy',
+    _logo: '_logo__yd',
+    _title: '_title__xn',
+    _menu: '_menu__ph',
+    '-fixed': '-fixed__zh',
+    '-dark': '-dark__ka',
+    '-expanded': '-expanded__xh',
+    '-big': '-big__xa'
   };
 */
 
-initClass(styles);
+constructor() {
+  super();
+  initClass(styles); // header__ab will be insert to every elements which have addClass
+}
 
-<Component {...addClass(
-  '_logo',
-  { ['-big']: true, ['-true']: true, ['-false']: false },
-  ['-array-item-1', '-dark'],
-  [{ '-object-in-array-item-1': true }]
-);} />
-
-// result class="header__abc _logo__def -big__xyz -true -array-item-1 -dark__lmn -object-in-array-item-1"
+render() {
+  return (
+    <div {...addClass('_block')}>
+      <div {...addClass('_logo', '-dark')}></div>
+      <div {...addClass('_title', [ '-global-text' ], [{ '-big': true }])}></div>
+      <div {...addClass('_menu', { '-expanded': true })}></div>
+    </div>
+  )
+}
 ```
