@@ -14,8 +14,10 @@
 ```
 
 ```es6
-import { initClass, addClass } from 'react-add-class';
+import initClassName from 'react-add-class';
 import styles from './styles.css';
+
+const addClass = initClassName(styles);
 
 /*
   styles = {
@@ -30,11 +32,6 @@ import styles from './styles.css';
     '-big': '-big__xa'
   };
 */
-
-constructor() {
-  super();
-  initClass(styles); // header__ab will be insert to every elements which have addClass
-}
 
 render() {
   return (

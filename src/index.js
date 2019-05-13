@@ -1,52 +1,60 @@
-let styles = {};
 const hasOwn = {}.hasOwnProperty;
 
-const pushClass = function pushClass(className) {
-  this.push(hasOwn.call(styles, className) ? styles[className] : className);
-};
+class ClassNames {
+  constructor(styles) {
+    this.styles = styles;
+    this.indexClass = styles[Object.keys(styles)[0]];
+  }
 
-const getClasses = function getClasses(...args) {
-  const classes = [];
-  const argsList = Array.from(args);
-  argsList.map(arg => {
-    if (arg) {
-      switch (typeof arg) {
-        case 'string':
-        case 'number':
-          pushClass.call(classes, arg);
-          break;
-        case 'object':
-          if (Array.isArray(arg) && arg.length) {
-            // ARRAY;
-            const inner = getClasses(...arg);
-            if (inner) {
-              pushClass.call(classes, inner);
-            }
-          } else {
-            // OBJECT
-            Object.keys(arg).forEach(key => {
-              if (hasOwn.call(arg, key) && arg[key]) {
-                pushClass.call(classes, key);
+  pushClass = (className) => {
+    const { styles, extendClasses } = this;
+    extendClasses.push(hasOwn.call(styles, className) ? styles[className] : className);
+  }
+
+  renderExtendClasses = (...args) => {
+    const { pushClass } = this;
+    const argsList = Array.from(args);
+    argsList.map((arg) => {
+      if (arg) {
+        switch (typeof arg) {
+          case 'string':
+          case 'number':
+            pushClass(arg);
+            break;
+          case 'object':
+            if (Array.isArray(arg) && arg.length) {
+              // ARRAY;
+              const inner = this.renderExtendClasses(...arg);
+              if (inner) {
+                pushClass(inner);
               }
-            });
-          }
-          break;
-        default:
+            } else {
+              // OBJECT
+              Object.keys(arg).forEach((key) => {
+                if (hasOwn.call(arg, key) && arg[key]) {
+                  pushClass(key);
+                }
+              });
+            }
+            break;
+          default:
+        }
       }
-    }
-    return false;
-  });
-  return classes.join(' ');
-};
+      return false;
+    });
+  }
 
-export const initClass = function initClass(initStyles) {
-  styles = initStyles;
-};
+  addClass = (...args) => {
+    this.extendClasses = [];
+    this.renderExtendClasses(args);
+    const { indexClass, extendClasses } = this;
+    return {
+      className: indexClass + (extendClasses.length ? ` ${extendClasses.join(' ')}` : '')
+    };
+  }
+}
 
-export const addClass = function addClass(...args) {
-  const indexClass = styles[Object.keys(styles)[0]];
-  const classes = getClasses(args);
-  return {
-    className: indexClass + (classes.length ? ` ${classes}` : '')
-  };
-};
+export default function initClassName(styles = { component: 'component' }) {
+  const classNames = new ClassNames(styles);
+  return classNames.addClass;
+}

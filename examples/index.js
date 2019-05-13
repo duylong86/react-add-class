@@ -1,4 +1,4 @@
-const { initClass, addClass } = require('../lib');
+const initClassName = require('../lib').default;
 
 const styles = {
   header: 'header__abc',
@@ -7,7 +7,7 @@ const styles = {
   '-dark': '-dark__lmn'
 };
 
-initClass(styles);
+const addClass = initClassName(styles);
 
 console.log('addClass:\n', addClass());
 

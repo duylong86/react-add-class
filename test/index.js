@@ -1,5 +1,5 @@
 import { assert, expect } from 'chai';
-import { initClass, addClass } from '../src';
+import initClassName from '../src';
 
 describe('Awesome test.', () => {
   it('Test class name return', () => {
@@ -10,7 +10,7 @@ describe('Awesome test.', () => {
       '-dark': '-dark__lmn'
     };
 
-    initClass(styles);
+    const addClass = initClassName(styles);
 
     const headerClass = addClass(
       '_logo',
